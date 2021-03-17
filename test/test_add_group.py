@@ -1,19 +1,5 @@
-import pytest
-from model.group import Group
-from model.utils import random_string
-
-testdata = [
-    Group(name="" if name else random_string("name", 10),
-          header="" if header else random_string("header", 20),
-          footer="" if footer else random_string("footer", 20))
-    for name in [True, False]
-    for header in [True, False]
-    for footer in [True, False]
-]
-
-
-@pytest.mark.parametrize("group", testdata, ids=[repr(g) for g in testdata])
-def test_add_group(app, group):
+def test_add_group(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
 
